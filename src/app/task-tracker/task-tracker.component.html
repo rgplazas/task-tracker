@@ -6,12 +6,12 @@
     <mat-card-content>
       <div class="add-task-form">
         <mat-form-field appearance="outline" class="task-input">
-          <mat-label>Add new task</mat-label>
-          <input matInput [(ngModel)]="newTaskDescription" (keyup.enter)="addTask()" placeholder="Enter task description">
+          <mat-label>Agregar nueva tarea</mat-label>
+          <input matInput [(ngModel)]="newTaskDescription" (keyup.enter)="addTask()" placeholder="Ingrese la descripción de la tarea">
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="addTask()" class="add-button">
           <mat-icon>add</mat-icon>
-          Add Task
+          Agregar Tarea
         </button>
       </div>
     </mat-card-content>

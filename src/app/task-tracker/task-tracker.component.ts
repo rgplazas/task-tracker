@@ -40,49 +40,49 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    console.log('%c[TaskTracker] Constructed', 'color: #4CAF50; font-weight: bold;', 'isBrowser:', this.isBrowser);
+    console.log('%c[TaskTracker] Construido', 'color: #4CAF50; font-weight: bold;', 'isBrowser:', this.isBrowser);
   }
 
   ngOnInit() {
     // Siempre inicializamos, incluso en SSR
-    console.log('%c[TaskTracker] Initializing...', 'color: #2196F3; font-weight: bold;');
+    console.log('%c[TaskTracker] Inicializando...', 'color: #2196F3; font-weight: bold;');
     
     // En SSR, solo mostramos un estado inicial vacío
     if (!this.isBrowser) {
-      console.log('[TaskTracker] Server-side rendering, using empty state');
+      console.log('[TaskTracker] Renderizado del lado del servidor, usando estado vacío');
       this.tasks = [];
       return;
     }
 
-    console.log('%c[TaskTracker] Initializing...', 'color: #2196F3; font-weight: bold;');
-    console.log('%c[TaskTracker] About to subscribe to tasks$', 'color: #2196F3; font-weight: bold;');
+    console.log('%c[TaskTracker] Inicializando...', 'color: #2196F3; font-weight: bold;');
+    console.log('%c[TaskTracker] A punto de suscribirse a tasks$', 'color: #2196F3; font-weight: bold;');
     
     this.tasksSubscription = this.supabaseService.tasks$.subscribe({
       next: (tasks) => {
-        console.log('%c[TaskTracker] Received tasks:', 'color: #4CAF50; font-weight: bold;', tasks);
-        console.log('%c[TaskTracker] Tasks type:', 'color: #4CAF50; font-weight: bold;', typeof tasks);
-        console.log('%c[TaskTracker] Is array?', 'color: #4CAF50; font-weight: bold;', Array.isArray(tasks));
+        console.log('%c[TaskTracker] Tareas recibidas:', 'color: #4CAF50; font-weight: bold;', tasks);
+        console.log('%c[TaskTracker] Tipo de tareas:', 'color: #4CAF50; font-weight: bold;', typeof tasks);
+        console.log('%c[TaskTracker] ¿Es un array?', 'color: #4CAF50; font-weight: bold;', Array.isArray(tasks));
         this.tasks = tasks;
-        this.showMessage('Tasks loaded successfully');
+        this.showMessage('Tareas cargadas correctamente');
       },
       error: (error) => {
-        console.error('%c[TaskTracker] Subscription error:', 'color: #f44336; font-weight: bold;', error);
-        console.error('%c[TaskTracker] Error details:', 'color: #f44336; font-weight: bold;', {
+        console.error('%c[TaskTracker] Error de suscripción:', 'color: #f44336; font-weight: bold;', error);
+        console.error('%c[TaskTracker] Detalles del error:', 'color: #f44336; font-weight: bold;', {
           name: error.name,
           message: error.message,
           stack: error.stack
         });
         this.showMessage(
-          error.message || 'Error loading tasks. Please try again.',
+          error.message || 'Error al cargar las tareas. Por favor, intente nuevamente.',
           true
         );
       },
       complete: () => {
-        console.log('[TaskTracker] Subscription completed');
+        console.log('[TaskTracker] Suscripción completada');
       }
     });
     
-    console.log('[TaskTracker] Subscription set up');
+    console.log('[TaskTracker] Suscripción configurada');
   }
 
   ngOnDestroy() {
@@ -102,37 +102,37 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
 
   async addTask() {
     if (!this.newTaskDescription.trim()) {
-      this.showMessage('Please enter a task description', true);
+      this.showMessage('Por favor, ingrese una descripción para la tarea', true);
       return;
     }
 
     try {
       await this.supabaseService.addTask(this.newTaskDescription.trim());
       this.newTaskDescription = '';
-      this.showMessage('Task added successfully');
+      this.showMessage('Tarea agregada correctamente');
     } catch (error) {
-      console.error('Error adding task:', error);
-      this.showMessage('Error adding task', true);
+      console.error('Error al agregar la tarea:', error);
+      this.showMessage('Error al agregar la tarea', true);
     }
   }
 
   async toggleTask(task: Task) {
     try {
       await this.supabaseService.updateTask(task.id, !task.completed);
-      this.showMessage('Task updated successfully');
+      this.showMessage('Tarea actualizada correctamente');
     } catch (error) {
-      console.error('Error updating task:', error);
-      this.showMessage('Error updating task', true);
+      console.error('Error al actualizar la tarea:', error);
+      this.showMessage('Error al actualizar la tarea', true);
     }
   }
 
   async deleteTask(task: Task) {
     try {
       await this.supabaseService.deleteTask(task.id);
-      this.showMessage('Task deleted successfully');
+      this.showMessage('Tarea eliminada correctamente');
     } catch (error) {
-      console.error('Error deleting task:', error);
-      this.showMessage('Error deleting task', true);
+      console.error('Error al eliminar la tarea:', error);
+      this.showMessage('Error al eliminar la tarea', true);
     }
   }
 }
