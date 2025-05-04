@@ -1,0 +1,32 @@
+<div class="task-tracker-container">
+  <mat-card class="add-task-card">
+    <mat-card-header>
+      <mat-card-title>Task Tracker</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="add-task-form">
+        <mat-form-field appearance="outline" class="task-input">
+          <mat-label>Add new task</mat-label>
+          <input matInput [(ngModel)]="newTaskDescription" (keyup.enter)="addTask()" placeholder="Enter task description">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addTask()" class="add-button">
+          <mat-icon>add</mat-icon>
+          Add Task
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="tasks-list">
+    <mat-card *ngFor="let task of tasks" class="task-card" [class.completed]="task.completed">
+      <mat-card-content class="task-content">
+        <mat-checkbox [checked]="task.completed" (change)="toggleTask(task)" color="primary">
+          {{ task.description }}
+        </mat-checkbox>
+        <button mat-icon-button color="warn" (click)="deleteTask(task)" class="delete-button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
