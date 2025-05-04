@@ -85,7 +85,7 @@ export class SupabaseService {
       return;
     }
 
-    if (!existingTasks?.length) {
+    /*if (!existingTasks?.length) {
 
       const testTasks = [
         { description: 'Aprender Angular', completed: false },
@@ -99,7 +99,7 @@ export class SupabaseService {
 
       if (insertError) {
       }
-    }
+    }*/
   }
 
 
