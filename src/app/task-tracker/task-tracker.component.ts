@@ -40,49 +40,32 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    console.log('%c[TaskTracker] Construido', 'color: #4CAF50; font-weight: bold;', 'isBrowser:', this.isBrowser);
   }
 
   ngOnInit() {
-    // Siempre inicializamos, incluso en SSR
-    console.log('%c[TaskTracker] Inicializando...', 'color: #2196F3; font-weight: bold;');
-    
     // En SSR, solo mostramos un estado inicial vacío
     if (!this.isBrowser) {
-      console.log('[TaskTracker] Renderizado del lado del servidor, usando estado vacío');
       this.tasks = [];
       return;
     }
-
-    console.log('%c[TaskTracker] Inicializando...', 'color: #2196F3; font-weight: bold;');
-    console.log('%c[TaskTracker] A punto de suscribirse a tasks$', 'color: #2196F3; font-weight: bold;');
     
     this.tasksSubscription = this.supabaseService.tasks$.subscribe({
       next: (tasks) => {
-        console.log('%c[TaskTracker] Tareas recibidas:', 'color: #4CAF50; font-weight: bold;', tasks);
-        console.log('%c[TaskTracker] Tipo de tareas:', 'color: #4CAF50; font-weight: bold;', typeof tasks);
-        console.log('%c[TaskTracker] ¿Es un array?', 'color: #4CAF50; font-weight: bold;', Array.isArray(tasks));
         this.tasks = tasks;
         this.showMessage('Tareas cargadas correctamente');
       },
       error: (error) => {
-        console.error('%c[TaskTracker] Error de suscripción:', 'color: #f44336; font-weight: bold;', error);
-        console.error('%c[TaskTracker] Detalles del error:', 'color: #f44336; font-weight: bold;', {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        });
         this.showMessage(
           error.message || 'Error al cargar las tareas. Por favor, intente nuevamente.',
           true
         );
       },
       complete: () => {
-        console.log('[TaskTracker] Suscripción completada');
+
       }
     });
     
-    console.log('[TaskTracker] Suscripción configurada');
+
   }
 
   ngOnDestroy() {
@@ -111,7 +94,7 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
       this.newTaskDescription = '';
       this.showMessage('Tarea agregada correctamente');
     } catch (error) {
-      console.error('Error al agregar la tarea:', error);
+
       this.showMessage('Error al agregar la tarea', true);
     }
   }
@@ -121,7 +104,7 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
       await this.supabaseService.updateTask(task.id, !task.completed);
       this.showMessage('Tarea actualizada correctamente');
     } catch (error) {
-      console.error('Error al actualizar la tarea:', error);
+
       this.showMessage('Error al actualizar la tarea', true);
     }
   }
@@ -131,7 +114,7 @@ export class TaskTrackerComponent implements OnInit, OnDestroy {
       await this.supabaseService.deleteTask(task.id);
       this.showMessage('Tarea eliminada correctamente');
     } catch (error) {
-      console.error('Error al eliminar la tarea:', error);
+
       this.showMessage('Error al eliminar la tarea', true);
     }
   }
