@@ -1,10 +1,203 @@
-# 🚀 Task Tracker App
+# 🗓️ Task Tracker - Gestor de Tareas
 
-## 📋 Descripción
+## 📝 Descripción
 
-Task Tracker es una aplicación moderna de gestión de tareas construida con Angular 19 y Supabase. Permite a los usuarios crear, actualizar y gestionar tareas de manera eficiente con una interfaz de usuario intuitiva y almacenamiento en tiempo real.
+Task Tracker es una aplicación web moderna para gestionar tus tareas diarias. Imagina tener una lista de tareas digital que:
+- Se sincroniza automáticamente entre todos tus dispositivos
+- Funciona incluso sin internet
+- Tiene una interfaz moderna y fácil de usar
+- Es accesible para todos los usuarios
 
-## ✨ Características
+## 🌟 ¿Por qué usar Task Tracker?
+
+1. 🚀 **Fácil de Usar**
+   - Interfaz intuitiva y amigable
+   - No requiere conocimientos técnicos
+   - Diseño adaptable a cualquier dispositivo
+
+2. 🔄 **Siempre Sincronizado**
+   - Tus tareas se guardan automáticamente
+   - Accede desde cualquier dispositivo
+   - Funciona sin internet (modo offline)
+
+3. 🛠️ **Características Avanzadas**
+   - Previene tareas duplicadas
+   - Validación inteligente
+   - Notificaciones claras
+   - Modo oscuro automático
+
+## 💻 ¿Qué tecnologías usa?
+
+### Angular 19.5
+¿Qué es? Un framework moderno para crear aplicaciones web.
+- Desarrollado por Google
+- Usado por grandes empresas como Microsoft y Samsung
+- Garantiza aplicaciones rápidas y seguras
+
+### Supabase
+¿Qué es? Una alternativa moderna a Firebase.
+- Base de datos en la nube
+- Sincronización en tiempo real
+- Totalmente gratuito para empezar
+
+## 📍 Requisitos Previos
+
+### Para Usuarios
+Solo necesitas un navegador web moderno como:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+
+### Para Desarrolladores
+1. **Node.js**
+   - ¿Qué es? El motor que ejecuta el código
+   - Descargar de: https://nodejs.org
+   - Versión recomendada: 18 o superior
+
+2. **Angular CLI**
+   - ¿Qué es? Herramienta para manejar proyectos Angular
+   - Instalar con: `npm install -g @angular/cli`
+
+3. **Cuenta Supabase**
+   - Registrarse en: https://supabase.com
+   - Es gratis y solo toma 2 minutos
+
+## 💻 Instalación
+
+### Paso 1: Obtener el Código
+```bash
+# 1. Abrir terminal o símbolo del sistema
+
+# 2. Ir a la carpeta donde quieres el proyecto
+cd mis-proyectos
+
+# 3. Clonar el repositorio
+git clone https://github.com/tu-usuario/task-tracker.git
+
+# 4. Entrar a la carpeta
+cd task-tracker
+```
+
+### Paso 2: Instalar Dependencias
+```bash
+# Instalar todo lo necesario
+npm install
+```
+
+### Paso 3: Configurar Supabase
+1. Crear archivo `.env` en la carpeta principal
+2. Agregar tus claves de Supabase:
+```env
+SUPABASE_URL=tu-url-de-supabase
+SUPABASE_KEY=tu-clave-de-supabase
+```
+
+### Paso 4: Iniciar la Aplicación
+```bash
+# Iniciar servidor de desarrollo
+ng serve
+
+# Abrir en el navegador:
+http://localhost:4200
+```
+
+## 💡 Guía de Uso
+
+### Crear una Tarea
+1. Escribe la descripción en el campo de texto
+2. Presiona Enter o el botón "Agregar"
+
+### Gestionar Tareas
+- ✅ Marcar como completada: Click en el checkbox
+- 🗑️ Eliminar tarea: Click en el botón de eliminar
+- ✏️ Editar tarea: Doble click en el texto
+
+### Validaciones
+- No se permiten tareas vacías
+- Mínimo 3 caracteres
+- No se permiten duplicados
+
+## 👨‍💻 Para Desarrolladores
+
+### Estructura del Proyecto
+```
+src/
+├── app/                # Código principal
+│   ├── task-tracker/    # Componente de tareas
+│   ├── services/        # Servicios (Supabase)
+│   └── shared/          # Componentes compartidos
+├── assets/            # Imágenes y recursos
+└── environments/      # Configuración
+```
+
+### Comandos Útiles
+```bash
+# Desarrollo
+ng serve
+
+# Construir para producción
+ng build
+
+# Ejecutar pruebas
+ng test
+
+# Revisar código
+ng lint
+```
+
+## 🔗 Enlaces Útiles
+
+### Documentación
+- [Angular](https://angular.dev)
+- [Supabase](https://supabase.com/docs)
+- [TypeScript](https://www.typescriptlang.org/docs)
+
+### Tutoriales
+- [Angular para Principiantes](https://angular.dev/tutorials/first-app)
+- [Introducción a Supabase](https://supabase.com/docs/guides/getting-started)
+
+## 👨‍💻 Contribución
+¿Quieres mejorar Task Tracker? ¡Genial!
+
+1. Haz un Fork del proyecto
+2. Crea una rama (`git checkout -b mejora/nueva-funcion`)
+3. Haz commit (`git commit -m 'feat: Agrega nueva función'`)
+4. Sube los cambios (`git push origin mejora/nueva-funcion`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+Este proyecto está bajo la Licencia MIT.
+
+## 👨‍💻 Autor
+Rodrigo Plazas
+
+## 👏 Agradecimientos
+- Equipo de Angular
+- Comunidad de Supabase
+- Todos los contribuidores
+
+## 💬 Soporte
+¿Tienes preguntas? ¿Necesitas ayuda?
+- Abre un Issue en GitHub
+- Envía un correo a: [tu-email]
+
+---
+
+💡 **Nota**: Este proyecto está en constante mejora. ¡Tus sugerencias son bienvenidas!
+
+## Descripción
+Task Tracker es una aplicación moderna de gestión de tareas desarrollada con Angular 19.5. Permite a los usuarios crear, gestionar y dar seguimiento a sus tareas diarias con una interfaz intuitiva y accesible.
+
+## Características Principales
+
+### Gestión de Tareas
+- CRUD completo de tareas
+- Validaciones avanzadas:
+  - Prevención de tareas duplicadas
+  - Validación de longitud mínima
+  - Detección de tareas vacías
+- Sincronización en tiempo real con Supabase
+- Persistencia local con localStorage
 
 - ⚡ Interfaz de usuario moderna y responsive
 - 🔄 Sincronización en tiempo real con Supabase
