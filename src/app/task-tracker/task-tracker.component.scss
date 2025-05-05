@@ -1,99 +1,321 @@
+/**
+ * Estilos modernos para el TaskTracker (2025)
+ * 
+ * Características de diseño:
+ * - Neomorfismo suave y elegante
+ * - Sistema de diseño Material You
+ * - Paleta de colores dinámica
+ * - Animaciones fluidas y naturales
+ * - Diseño completamente responsivo
+ * - Modo oscuro automático
+ * - Accesibilidad mejorada
+ * - Soporte para dispositivos táctiles
+ */
+
+/* Variables del tema */
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background: #fafafa;
-  padding: 2rem;
+  /* Colores primarios y de acento */
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --accent: #8b5cf6;
+  --accent-light: #a78bfa;
+  --accent-dark: #7c3aed;
+  
+  /* Colores de estado */
+  --success: #10b981;
+  --success-light: #34d399;
+  --danger: #ef4444;
+  --danger-light: #f87171;
+  
+  /* Colores de fondo y superficie */
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --surface-active: #e2e8f0;
+  
+  /* Colores de texto */
+  --text: #1e293b;
+  --text-light: #64748b;
+  --text-lighter: #94a3b8;
+  
+  /* Efectos y utilidades */
+  --shadow-color: 226 30% 20%;
+  --border-radius: 1rem;
+  --border-radius-sm: 0.75rem;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Modo oscuro automático */
+  @media (prefers-color-scheme: dark) {
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-hover: #334155;
+    --surface-active: #475569;
+    --text: #f1f5f9;
+    --text-light: #94a3b8;
+    --text-lighter: #cbd5e1;
+    --shadow-color: 226 30% 5%;
+    
+    /* Ajuste de colores para modo oscuro */
+    --primary-light: #818cf8;
+    --accent-light: #a78bfa;
+    --success-light: #34d399;
+    --danger-light: #f87171;
+  }
 }
 
+/* Estilos base del componente */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 2rem 1rem;
+  transition: var(--transition);
+  
+  @media (max-width: 640px) {
+    padding: 1rem;
+  }
+}
+
+/* Contenedor principal con efecto 3D */
 .task-tracker-container {
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+  margin: 0 auto;
+  perspective: 1000px;
+  
+  @media (max-width: 840px) {
+    max-width: 100%;
+  }
 }
 
+/* Tarjeta para agregar tareas con neomorfismo */
 .add-task-card {
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
   margin-bottom: 2rem;
+  box-shadow:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.07),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.07),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.07),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.07);
+  transform-style: preserve-3d;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    transform: translateY(-2px) rotateX(2deg);
+    box-shadow:
+      0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.09),
+      1.1px 2.3px 2.9px -0.4px hsl(var(--shadow-color) / 0.09),
+      2.1px 4.3px 5.4px -0.8px hsl(var(--shadow-color) / 0.09),
+      3.9px 7.8px 9.8px -1.3px hsl(var(--shadow-color) / 0.09),
+      6.8px 13.7px 17.2px -1.7px hsl(var(--shadow-color) / 0.09);
+  }
 }
 
+/* Formulario para agregar tareas con diseño moderno */
 .add-task-form {
   display: flex;
   gap: 1rem;
   align-items: center;
-  padding: 1rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
   .task-input {
     flex: 1;
+    
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background: var(--surface);
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      
+      &:hover {
+        background: var(--surface-hover);
+      }
+      
+      &:focus-within {
+        background: var(--surface-active);
+      }
+    }
+    
+    ::ng-deep .mat-mdc-form-field-flex {
+      padding: 0.5rem 1rem;
+    }
   }
 
   .add-button {
-    height: 56px;
+    --button-size: 3.5rem;
+    min-width: var(--button-size);
+    width: var(--button-size);
+    height: var(--button-size);
+    border-radius: 50%;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    transition: var(--transition-bounce);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+
+    &:hover {
+      transform: scale(1.05) rotate(90deg);
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.95) rotate(90deg);
+    }
+
+    mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    
+    @media (max-width: 640px) {
+      align-self: flex-end;
+    }
   }
 }
 
+/* Lista de tareas con animaciones */
 .tasks-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
+/* Tarjeta de tarea individual */
 .task-card {
-  transition: all 0.3s ease;
+  background: var(--surface);
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform-origin: left center;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateX(4px) scale(1.01);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
   &.completed {
-    background-color: #f5f5f5;
+    background: var(--surface-hover);
     opacity: 0.8;
   }
-}
 
-.task-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
+  .task-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: 1rem;
 
-  mat-checkbox {
-    flex: 1;
+    .completed-text {
+      text-decoration: line-through;
+      color: var(--text-light);
+    }
   }
 
   .delete-button {
     opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-}
+    transform: translateX(10px);
+    transition: var(--transition);
+    color: var(--danger);
 
-.task-card:hover .task-content .delete-button {
-  opacity: 1;
-}
-
-::ng-deep {
-  .mat-mdc-checkbox.mat-mdc-checkbox-checked {
-    .mdc-checkbox__background {
-      background-color: #4caf50 !important;
-      border-color: #4caf50 !important;
+    &:hover {
+      color: var(--danger-light);
+      background: rgba(239, 68, 68, 0.1);
     }
   }
 
-  .mat-mdc-checkbox-checked .mdc-checkbox__label {
-    text-decoration: line-through;
-    color: rgba(0, 0, 0, 0.6);
+  &:hover .delete-button {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
+/* Estado vacío con ilustración */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-lighter);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  small {
+    color: var(--text-light);
+    font-size: 0.875rem;
+  }
+}
+
+/* Animaciones */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Estilos de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Estilos para dispositivos táctiles */
+@media (hover: none) {
+  .task-card .delete-button {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mensajes de notificación */
 .snackbar-success {
-  background-color: #4caf50;
+  background: var(--success);
   color: white;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .snackbar-error {
-  background-color: #f44336;
+  background: var(--danger);
   color: white;
-  font-weight: bold;
+  font-weight: 500;
 }

@@ -1,32 +1,122 @@
-<div class="task-tracker-container">
-  <mat-card class="add-task-card">
-    <mat-card-header>
-      <mat-card-title>Task Tracker</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="add-task-form">
-        <mat-form-field appearance="outline" class="task-input">
-          <mat-label>Agregar nueva tarea</mat-label>
-          <input matInput [(ngModel)]="newTaskDescription" (keyup.enter)="addTask()" placeholder="Ingrese la descripción de la tarea">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="addTask()" class="add-button">
-          <mat-icon>add</mat-icon>
-          Agregar Tarea
-        </button>
-      </div>
-    </mat-card-content>
-  </mat-card>
+<!-- 
+  Task Tracker 2025 - Interfaz moderna y accesible
+  
+  Características:
+  - Diseño neomórfico y minimalista
+  - Modo oscuro automático
+  - Animaciones fluidas y naturales
+  - Interfaz completamente accesible
+  - Soporte para lectores de pantalla
+  - Navegación por teclado mejorada
+  - Diseño totalmente responsivo
+-->
 
-  <div class="tasks-list">
-    <mat-card *ngFor="let task of tasks" class="task-card" [class.completed]="task.completed">
-      <mat-card-content class="task-content">
-        <mat-checkbox [checked]="task.completed" (change)="toggleTask(task)" color="primary">
-          {{ task.description }}
-        </mat-checkbox>
-        <button mat-icon-button color="warn" (click)="deleteTask(task)" class="delete-button">
-          <mat-icon>delete</mat-icon>
+<!-- Contenedor principal con perspectiva 3D y región de landmark -->
+<main class="task-tracker-container" role="main" aria-labelledby="task-tracker-title">
+  <h1 id="task-tracker-title" class="visually-hidden">Task Tracker</h1>
+
+  <!-- Sección para agregar tareas -->
+  <section aria-labelledby="new-task-section">
+    <h2 id="new-task-section" class="visually-hidden">Agregar nueva tarea</h2>
+    
+    <!-- Tarjeta con efecto neomórfico -->
+    <mat-card class="add-task-card" appearance="outlined">
+      <form class="add-task-form" (ngSubmit)="addTask()" #taskForm="ngForm">
+        <!-- Campo de texto moderno con soporte completo de accesibilidad -->
+        <mat-form-field appearance="outline" class="task-input">
+          <mat-label>
+            <mat-icon aria-hidden="true">task_alt</mat-icon>
+            Nueva tarea
+          </mat-label>
+          <input matInput 
+                 [(ngModel)]="newTaskDescription" 
+                 name="taskDescription"
+                 #taskInput="ngModel"
+                 required
+                 minlength="3"
+                 placeholder="¿Qué necesitas hacer?"
+                 autocomplete="off"
+                 [attr.aria-invalid]="taskInput.invalid && taskInput.touched"
+                 aria-describedby="task-input-hint task-input-error">
+          
+          <mat-hint id="task-input-hint">Presiona Enter o el botón + para agregar</mat-hint>
+          
+          <!-- Mensajes de error accesibles -->
+          <mat-error id="task-input-error" *ngIf="taskInput.invalid && taskInput.touched">
+            <span *ngIf="taskInput.errors?.['required']">La descripción es requerida</span>
+            <span *ngIf="taskInput.errors?.['minlength']">La descripción debe tener al menos 3 caracteres</span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Botón de agregar con animación y feedback táctil -->
+        <button mat-fab
+                type="submit"
+                [disabled]="taskForm.invalid"
+                class="add-button"
+                aria-label="Agregar tarea">
+          <mat-icon aria-hidden="true">add</mat-icon>
         </button>
-      </mat-card-content>
+      </form>
     </mat-card>
-  </div>
-</div>
+  </section>
+
+  <!-- Lista de tareas con animaciones y región de landmark -->
+  <section class="tasks-section" aria-labelledby="tasks-section-title">
+    <h2 id="tasks-section-title" class="visually-hidden">Lista de tareas</h2>
+    
+    <div class="tasks-list" role="list">
+      <!-- Tarjetas de tareas con efectos visuales y soporte de accesibilidad -->
+      <mat-card *ngFor="let task of tasks; let i = index" 
+                class="task-card" 
+                [class.completed]="task.completed"
+                [@fadeInUp]="{value: '', params: {delay: i * 100}}"
+                role="listitem">
+        <mat-card-content class="task-content">
+          <!-- Checkbox con etiquetas descriptivas -->
+          <mat-checkbox [checked]="task.completed" 
+                        (change)="toggleTask(task)" 
+                        color="primary"
+                        [attr.aria-label]="'Marcar tarea ' + task.description + ' como ' + (task.completed ? 'pendiente' : 'completada')">
+            <span [class.completed-text]="task.completed" [attr.aria-label]="task.description">
+              {{ task.description }}
+            </span>
+          </mat-checkbox>
+
+          <!-- Botón de eliminar con confirmación -->
+          <button mat-icon-button 
+                  (click)="deleteTask(task)" 
+                  class="delete-button"
+                  [attr.aria-label]="'Eliminar tarea: ' + task.description"
+                  matTooltip="Eliminar tarea"
+                  matTooltipPosition="before">
+            <mat-icon aria-hidden="true">delete_outline</mat-icon>
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Estado vacío con ilustración y mensaje descriptivo -->
+      <mat-card class="empty-state" *ngIf="tasks.length === 0" role="status" aria-live="polite">
+        <mat-card-content>
+          <mat-icon class="empty-icon" aria-hidden="true">task</mat-icon>
+          <p>No hay tareas pendientes</p>
+          <small>Agrega una nueva tarea para comenzar</small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+</main>
+
+<!-- Estilos para elementos visualmente ocultos pero accesibles para lectores de pantalla -->
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
